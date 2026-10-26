@@ -879,21 +879,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Secret file upload
+  // Secret & Token file upload
   if (ytSecretFileInput) {
     ytSecretFileInput.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (!file) return;
       try {
         const text = await file.text();
-        const res = await fetch('/api/youtube/upload-secret', {
+        const json = JSON.parse(text);
+        const endpoint = (json.installed || json.web) ? '/api/youtube/upload-secret' : '/api/youtube/upload-token';
+        const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: text
         });
         const d = await res.json();
         if (d.success) {
-          showToast('บันทึก client_secret.json สำเร็จแล้ว!');
+          showToast(d.message || 'บันทึกสำเร็จแล้ว!');
           checkYouTubeStatus();
         } else {
           alert(d.error || 'ไฟล์ไม่ถูกต้อง');

@@ -13,12 +13,47 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CLIENT_SECRETS_FILE = os.path.join(BASE_DIR, "client_secret.json")
 TOKEN_FILE = os.path.join(BASE_DIR, "youtube_token.json")
 
+def sync_env_credentials():
+    token_env = os.environ.get("YOUTUBE_TOKEN_JSON", "").strip()
+    if token_env and not os.path.exists(TOKEN_FILE):
+        try:
+            with open(TOKEN_FILE, "w", encoding="utf-8") as tf:
+                tf.write(token_env)
+        except Exception as e:
+            sys.stderr.write(f"Warning: Failed to write token from env: {e}\n")
+
+    secret_env = os.environ.get("CLIENT_SECRET_JSON", "").strip()
+    if secret_env and not os.path.exists(CLIENT_SECRETS_FILE):
+        try:
+            with open(CLIENT_SECRETS_FILE, "w", encoding="utf-8") as sf:
+                sf.write(secret_env)
+        except Exception as e:
+            sys.stderr.write(f"Warning: Failed to write secret from env: {e}\n")
+
+sync_env_credentials()
+
 SCOPES = [
     "https://www.googleapis.com/auth/youtube.upload",
     "https://www.googleapis.com/auth/youtube"
 ]
 
+def ensure_local_file(path_or_url, suffix=".mp4"):
+    if not path_or_url:
+        return None, False
+    if os.path.exists(path_or_url):
+        return path_or_url, False
+    if path_or_url.startswith("http://") or path_or_url.startswith("https://"):
+        import tempfile
+        import urllib.request
+        fd, temp_path = tempfile.mkstemp(suffix=suffix)
+        os.close(fd)
+        sys.stderr.write(f"Downloading media from Cloud URL: {path_or_url[:60]}...\n")
+        urllib.request.urlretrieve(path_or_url, temp_path)
+        return temp_path, True
+    return None, False
+
 def check_status():
+    sync_env_credentials()
     has_secret = os.path.exists(CLIENT_SECRETS_FILE)
     has_token = os.path.exists(TOKEN_FILE)
     auth_valid = False
@@ -37,6 +72,7 @@ def check_status():
         "authenticated": auth_valid,
         "client_secrets_path": CLIENT_SECRETS_FILE
     }
+
 
 def get_authenticated_service(interactive=False):
     from google.oauth2.credentials import Credentials
@@ -80,9 +116,6 @@ def get_authenticated_service(interactive=False):
     return service, "OK"
 
 def upload_and_schedule(video_path, thumbnail_path=None, title="Recap Short", description="", tags=None, schedule_iso=None, interactive=False):
-    if not os.path.exists(video_path):
-        return {"success": False, "error": f"Video file not found: {video_path}"}
-
     service, status = get_authenticated_service(interactive=interactive)
     if not service:
         if status == "MISSING_CLIENT_SECRET":
@@ -98,6 +131,12 @@ def upload_and_schedule(video_path, thumbnail_path=None, title="Recap Short", de
                 "message": "ต้องเข้าสู่ระบบยืนยันสิทธิ์ Google Account ช่อง YouTube ก่อน"
             }
         return {"success": False, "error": status}
+
+    real_video_path, is_temp_video = ensure_local_file(video_path, suffix=".mp4")
+    real_thumb_path, is_temp_thumb = ensure_local_file(thumbnail_path, suffix=".jpg") if thumbnail_path else (None, False)
+
+    if not real_video_path or not os.path.exists(real_video_path):
+        return {"success": False, "error": f"Video file not found or could not be downloaded: {video_path}"}
 
     from googleapiclient.http import MediaFileUpload
 
@@ -131,7 +170,7 @@ def upload_and_schedule(video_path, thumbnail_path=None, title="Recap Short", de
         body["status"]["privacyStatus"] = "public"
 
     try:
-        media = MediaFileUpload(video_path, chunksize=1024*1024, resumable=True)
+        media = MediaFileUpload(real_video_path, chunksize=1024*1024, resumable=True)
         request = service.videos().insert(
             part="snippet,status",
             body=body,
@@ -150,9 +189,9 @@ def upload_and_schedule(video_path, thumbnail_path=None, title="Recap Short", de
 
         # Upload Custom Thumbnail if provided
         thumb_uploaded = False
-        if thumbnail_path and os.path.exists(thumbnail_path) and video_id:
+        if real_thumb_path and os.path.exists(real_thumb_path) and video_id:
             try:
-                thumb_media = MediaFileUpload(thumbnail_path, mimetype="image/jpeg")
+                thumb_media = MediaFileUpload(real_thumb_path, mimetype="image/jpeg")
                 service.thumbnails().set(
                     videoId=video_id,
                     media_body=thumb_media
@@ -173,6 +212,17 @@ def upload_and_schedule(video_path, thumbnail_path=None, title="Recap Short", de
         }
     except Exception as e:
         return {"success": False, "error": f"YouTube API Error: {str(e)}"}
+    finally:
+        if is_temp_video and real_video_path and os.path.exists(real_video_path):
+            try:
+                os.remove(real_video_path)
+            except Exception:
+                pass
+        if is_temp_thumb and real_thumb_path and os.path.exists(real_thumb_path):
+            try:
+                os.remove(real_thumb_path)
+            except Exception:
+                pass
 
 def main():
     parser = argparse.ArgumentParser(description="YouTube Short Auto Uploader & Scheduler")

@@ -339,13 +339,13 @@ CREATE POLICY "Public Insert Recaps" ON storage.objects FOR INSERT WITH CHECK (b
             </span>
           </div>
 
-          <!-- Secret Upload Box (Shown when client_secret.json missing) -->
+          <!-- Secret/Token Upload Box (Shown when client_secret.json missing) -->
           <div id="ytSecretUploadBox" style="display: none; margin-top: 10px; background: rgba(0, 0, 0, 0.3); border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
             <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
-              ยังไม่พบไฟล์ <code>client_secret.json</code> จาก Google Cloud Console
+              เลือกไฟล์ <code>client_secret.json</code> หรือ <code>youtube_token.json</code>
             </p>
             <label for="ytSecretFileInput" style="display: inline-block; padding: 6px 14px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: #fff; font-size: 12px; cursor: pointer;">
-              <i class="fa-solid fa-upload"></i> เลือกไฟล์ client_secret.json
+              <i class="fa-solid fa-upload"></i> อัปโหลดไฟล์กุญแจ (.json)
             </label>
             <input type="file" id="ytSecretFileInput" accept=".json" style="display: none;">
           </div>

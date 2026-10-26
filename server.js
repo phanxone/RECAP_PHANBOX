@@ -392,6 +392,25 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // 4.2.1 YouTube API: /api/youtube/upload-token (POST)
+  if (pathname === '/api/youtube/upload-token' && req.method === 'POST') {
+    let body = '';
+    req.on('data', c => body += c);
+    req.on('end', () => {
+      try {
+        const jsonContent = JSON.parse(body);
+        const tokenPath = path.join(BASE_DIR, 'youtube_token.json');
+        fs.writeFileSync(tokenPath, JSON.stringify(jsonContent, null, 2), 'utf8');
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ success: true, message: 'บันทึกไฟล์ youtube_token.json สำเร็จแล้ว!' }));
+      } catch (e) {
+        res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ success: false, error: 'รูปแบบไฟล์ JSON ไม่ถูกต้อง: ' + e.message }));
+      }
+    });
+    return;
+  }
+
   // 4.3 YouTube API: /api/youtube/auth (POST) - Trigger local OAuth browser flow
   if (pathname === '/api/youtube/auth' && req.method === 'POST') {
     const py = spawn('python', [path.join(BASE_DIR, 'youtube_uploader.py'), '--auth-login'], { cwd: BASE_DIR });
@@ -412,24 +431,36 @@ const server = http.createServer(async (req, res) => {
   if (pathname === '/api/youtube/schedule' && req.method === 'POST') {
     let body = '';
     req.on('data', c => body += c);
-    req.on('end', () => {
+    req.on('end', async () => {
       try {
         const payload = JSON.parse(body);
         const clipId = payload.clip_id;
-        const recaps = getLocalRecaps();
-        const item = recaps.find(r => r.id === clipId || r.folder === clipId);
+        let recaps = getLocalRecaps();
+        let item = recaps.find(r => r.id === clipId || r.folder === clipId || r.folder_name === clipId);
+
+        if (!item && process.env.SUPABASE_URL && process.env.SUPABASE_KEY) {
+          const cloudRecaps = await getSupabaseRecaps();
+          item = cloudRecaps.find(r => r.id === clipId || r.folder === clipId || r.folder_name === clipId);
+        }
 
         if (!item) {
           res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
           return res.end(JSON.stringify({ success: false, error: 'ไม่พบคลิปนี้ในระบบ' }));
         }
 
-        const videoPath = path.join(FINAL_DIR, item.folder, item.video_file);
-        const thumbPath = path.join(FINAL_DIR, item.folder, item.thumbnail_file);
+        let videoPath = (item.folder && item.video_file) ? path.join(FINAL_DIR, item.folder, item.video_file) : '';
+        let thumbPath = (item.folder && item.thumbnail_file) ? path.join(FINAL_DIR, item.folder, item.thumbnail_file) : '';
 
         if (!fs.existsSync(videoPath)) {
+          videoPath = item.video_url || item.cloud_video_url || '';
+        }
+        if (!fs.existsSync(thumbPath)) {
+          thumbPath = item.thumbnail_url || item.cloud_thumbnail_url || '';
+        }
+
+        if (!videoPath) {
           res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
-          return res.end(JSON.stringify({ success: false, error: 'ไม่พบไฟล์วิดีโอบนเครื่อง' }));
+          return res.end(JSON.stringify({ success: false, error: 'ไม่พบที่อยู่ไฟล์วิดีโอนี้ (ทั้งในเครื่องและ Cloud)' }));
         }
 
         const title = payload.title || item.title || 'Recap Short';
@@ -440,11 +471,14 @@ const server = http.createServer(async (req, res) => {
         const args = [
           path.join(BASE_DIR, 'youtube_uploader.py'),
           '--video', videoPath,
-          '--thumbnail', thumbPath,
           '--title', title,
           '--description', description,
           '--tags', tags
         ];
+
+        if (thumbPath) {
+          args.push('--thumbnail', thumbPath);
+        }
 
         if (scheduleTime) {
           args.push('--schedule', scheduleTime);
@@ -475,6 +509,7 @@ const server = http.createServer(async (req, res) => {
     });
     return;
   }
+
 
   // 5. Static files (index.html, style.css, app.js)
   let staticPath = path.join(BASE_DIR, pathname === '/' ? 'index.html' : pathname);
