@@ -1,0 +1,19 @@
+# Environment & Secrets
+.env
+*.env
+client_secret*.json
+youtube_token.json
+
+# Large media & video files (over GitHub limit)
+/final/
+/output/
+/cover_candidates/
+
+# Dependencies & Cache
+__pycache__/
+*.py[cod]
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db

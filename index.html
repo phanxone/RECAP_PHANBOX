@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RECAP VAULT | คลังเก็บผลงานคลิปสั้น AI & Supabase Storage</title>
+  <meta name="description" content="คลังเก็บผลงานคลิปสั้น วิดีโอแนวตั้ง 9:16 ปกคลิป ชื่อคลิป และคำอธิบาย พร้อมระบบเชื่อมต่อ Supabase Cloud">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Supabase JS Client CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Vanilla CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient High-Tech Cyber Glows -->
+  <div class="ambient-glow glow-emerald"></div>
+  <div class="ambient-glow glow-cyan"></div>
+  <div class="ambient-glow glow-purple"></div>
+
+  <!-- Main App Navigation -->
+  <header class="vault-navbar" id="vaultNavbar">
+    <div class="nav-wrapper">
+      <div class="brand-zone">
+        <div class="brand-icon-box">
+          <i class="fa-solid fa-box-archive"></i>
+        </div>
+        <div class="brand-text-box">
+          <div class="brand-name">
+            RECAP <span class="neon-text">VAULT</span>
+            <span class="vault-version">v2.0</span>
+          </div>
+          <div class="brand-sub">คลังเก็บผลงานคลิปสั้น AI & Supabase Cloud</div>
+        </div>
+      </div>
+
+      <!-- Cloud Status & Header Actions -->
+      <div class="header-actions">
+        <div class="status-indicator" id="statusIndicator">
+          <span class="status-dot"></span>
+          <span class="status-label" id="statusLabel">LOCAL VAULT MODE</span>
+        </div>
+
+        <button type="button" class="btn-vault-action" id="btnSyncCloud" title="ซิงค์ข้อมูลกับ Supabase">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <span>ซิงค์ Cloud</span>
+        </button>
+
+        <button type="button" class="btn-vault-settings" id="btnOpenSettings" title="ตั้งค่า Supabase">
+          <i class="fa-solid fa-gear"></i>
+          <span>ตั้งค่า Supabase</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="vault-main-container">
+    
+    <!-- Hero / Stats Dashboard -->
+    <section class="vault-dashboard" id="vaultDashboard">
+      <div class="dashboard-header">
+        <div class="dash-welcome">
+          <div class="dash-badge">
+            <i class="fa-solid fa-boxes-stacked"></i>
+            <span>WAREHOUSE INVENTORY • คลังเก็บของ</span>
+          </div>
+          <h1 class="dash-title">
+            คลังรวบรวมคลิปสั้น <span class="gradient-headline">AI Video Recaps</span>
+          </h1>
+          <p class="dash-subtitle">
+            ผลงานทั้งหมดที่สร้างจากแชทนี้จะถูกจัดเก็บรวบรวมไว้ที่นี่ พร้อมแยกวิดีโอ Full HD 9:16, รูปปก, ตัวเลือกชื่อคลิป 3 สไตล์ และคำอธิบายสำหรับโพสต์โซเชียล
+          </p>
+        </div>
+
+        <!-- Quick Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon-wrapper stat-green">
+              <i class="fa-solid fa-film"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-num" id="statTotalClips">0</span>
+              <span class="stat-label">คลิปในคลัง</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper stat-cyan">
+              <i class="fa-solid fa-image"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-num" id="statTotalCovers">0</span>
+              <span class="stat-label">ปกแนวตั้ง HD</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper stat-gold">
+              <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-num" id="statTotalSeries">0</span>
+              <span class="stat-label">ซีรีส์/หมวดหมู่</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter & Search Controls -->
+    <section class="controls-toolbar" id="controlsToolbar">
+      <div class="search-box-wrapper">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="searchInput" class="search-input" placeholder="ค้นหาชื่อคลิป, ตัวละคร, หรือแฮชแท็ก...">
+        <button type="button" id="btnClearSearch" class="btn-clear-search" title="ล้างการค้นหา"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="filter-pills-row" id="filterPillsRow">
+        <button type="button" class="filter-pill active" data-filter="all">
+          <i class="fa-solid fa-border-all"></i> ทั้งหมด (<span id="countAll">0</span>)
+        </button>
+        <button type="button" class="filter-pill" data-filter="Ben 10 Omniverse">
+          <i class="fa-solid fa-atom"></i> Omniverse
+        </button>
+        <button type="button" class="filter-pill" data-filter="Ben 10 Alien Force">
+          <i class="fa-solid fa-shield-halved"></i> Alien Force
+        </button>
+      </div>
+
+      <div class="sort-selector-box">
+        <label for="sortSelect"><i class="fa-solid fa-arrow-down-short-wide"></i> เรียงตาม:</label>
+        <select id="sortSelect" class="sort-dropdown">
+          <option value="newest">ล่าสุดก่อน (Newest)</option>
+          <option value="oldest">เก่าสุดก่อน (Oldest)</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Vault Inventory Grid -->
+    <section class="vault-inventory-section">
+      <div class="inventory-grid" id="inventoryGrid">
+        <!-- Rendered dynamically by app.js -->
+        <div class="vault-loading-state" id="loadingState">
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+          <span>กำลังเปิดประตูคลังเก็บของ...</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Video Theater Modal -->
+  <div class="vault-modal" id="videoModal" aria-hidden="true">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-dialog video-dialog">
+      <button type="button" class="btn-modal-close" id="btnCloseModal" title="ปิดหน้าต่าง">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal-body-wrapper">
+        <!-- 9:16 Vertical Video Frame -->
+        <div class="video-player-frame">
+          <video id="modalVideoPlayer" controls playsinline loop></video>
+        </div>
+
+        <!-- Video Metadata Info -->
+        <div class="video-info-sidebar">
+          <div class="modal-tag-badge" id="modalSeriesBadge">SERIES</div>
+          <h2 class="modal-title" id="modalTitle">Title</h2>
+          
+          <div class="modal-meta-row">
+            <span class="modal-meta-item"><i class="fa-regular fa-clock"></i> <span id="modalDuration">0s</span></span>
+            <span class="modal-meta-item"><i class="fa-regular fa-calendar"></i> <span id="modalDate">-</span></span>
+          </div>
+
+          <div class="modal-title-copy-zone">
+            <label class="zone-label"><i class="fa-solid fa-tags"></i> ตัวเลือกชื่อคลิป:</label>
+            <div class="modal-titles-list" id="modalTitlesList"></div>
+          </div>
+
+          <div class="modal-desc-zone">
+            <label class="zone-label"><i class="fa-solid fa-file-lines"></i> คำอธิบาย & แฮชแท็ก:</label>
+            <div class="modal-desc-text" id="modalDescription"></div>
+            <button type="button" class="btn-copy-full-desc" id="btnCopyModalDesc">
+              <i class="fa-solid fa-copy"></i> คัดลอกคำอธิบายทั้งหมด
+            </button>
+          </div>
+
+          <div class="modal-download-actions">
+            <button type="button" id="btnOpenYouTubeSchedule" class="btn-modal-dl btn-dl-youtube" style="grid-column: span 2; background: linear-gradient(135deg, #ff0000, #cc0000); color: #fff; font-weight: 700; border: none; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4); cursor: pointer; padding: 12px; margin-bottom: 6px; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+              <i class="fa-brands fa-youtube" style="font-size: 18px;"></i> ตั้งเวลาโพสต์ไปยัง YouTube อัตโนมัติ
+            </button>
+            <a href="#" id="modalDownloadVideo" download class="btn-modal-dl btn-dl-video">
+              <i class="fa-solid fa-download"></i> ดาวน์โหลดวิดีโอ (.mp4)
+            </a>
+            <a href="#" id="modalDownloadCover" download class="btn-modal-dl btn-dl-cover">
+              <i class="fa-solid fa-image"></i> ดาวน์โหลดรูปปก (.jpg)
+            </a>
+            <button type="button" id="btnModalDeleteClip" class="btn-modal-dl" style="grid-column: span 2; background: rgba(255, 71, 87, 0.15); border: 1px solid rgba(255, 71, 87, 0.4); color: #ff4757; margin-top: 6px; cursor: pointer;">
+              <i class="fa-solid fa-trash-can"></i> ลบคลิปนี้ออกจากคลัง & Supabase
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="vault-modal" id="deleteConfirmModal" aria-hidden="true">
+    <div class="modal-backdrop" id="deleteConfirmBackdrop"></div>
+    <div class="modal-dialog" style="max-width: 480px; padding: 32px 28px;">
+      <button type="button" class="btn-modal-close" id="btnCloseDeleteModal" title="ปิดหน้าต่าง">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div style="text-align: center;">
+        <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255, 71, 87, 0.15); border: 1px solid rgba(255, 71, 87, 0.4); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 26px; color: #ff4757;">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">ยืนยันการลบคลิป?</h3>
+        <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.5;" id="deleteConfirmTitleText">
+          คลิปนี้จะถูกลบออกจากทั้งเครื่องคอมพิวเตอร์และฐานข้อมูล Supabase อย่างถาวร
+        </p>
+        <div style="background: rgba(0, 0, 0, 0.4); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 13px; color: #ff6b81; border: 1px dashed rgba(255, 71, 87, 0.3); margin-bottom: 24px;">
+          <i class="fa-solid fa-circle-exclamation"></i> ไฟล์และประวัติทั้งหมดจะไม่สามารถกู้คืนได้
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: center;">
+          <button type="button" id="btnCancelDelete" style="padding: 10px 22px; border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-subtle); color: #fff; font-family: var(--font-th); cursor: pointer; font-size: 13px;">
+            ยกเลิก
+          </button>
+          <button type="button" id="btnConfirmDelete" style="padding: 10px 24px; border-radius: var(--radius-md); background: #ff4757; border: 1px solid #ff4757; color: #fff; font-family: var(--font-th); font-weight: 700; cursor: pointer; font-size: 13px; box-shadow: 0 0 16px rgba(255, 71, 87, 0.5);">
+            <i class="fa-solid fa-trash-can"></i> ยืนยันลบคลิป
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supabase Settings Modal -->
+  <div class="vault-modal" id="settingsModal" aria-hidden="true">
+    <div class="modal-backdrop" id="settingsBackdrop"></div>
+    <div class="modal-dialog settings-dialog">
+      <button type="button" class="btn-modal-close" id="btnCloseSettings" title="ปิดหน้าต่าง">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="settings-content">
+        <div class="settings-header">
+          <div class="settings-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div>
+            <h2 class="settings-title">สถานะการเชื่อมต่อ Supabase (.env)</h2>
+            <p class="settings-sub">ระบบอ่านค่าการเชื่อมต่อโดยตรงจากไฟล์ความปลอดภัย <code>.env</code> บนเซิร์ฟเวอร์</p>
+          </div>
+        </div>
+
+        <div class="env-status-banner" style="background: rgba(0, 212, 255, 0.08); border: 1px solid var(--border-cyan); border-radius: var(--radius-md); padding: 14px 18px; margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+            <span style="font-weight: 700; font-size: 14px; color: var(--neon-cyan);"><i class="fa-solid fa-file-code"></i> ไฟล์ .env ในโปรเจกต์</span>
+            <span id="envStatusBadge" style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: rgba(0, 255, 136, 0.15); color: var(--neon-green); border: 1px solid var(--border-glow);">LOADED</span>
+          </div>
+          <div style="font-size: 13px; color: var(--text-secondary); word-break: break-all;">
+            <strong>ที่อยู่ไฟล์:</strong> <code>c:\71006\phanbox\.env</code>
+          </div>
+          <div id="envSupabaseUrlDisplay" style="font-size: 13px; color: var(--text-muted); margin-top: 4px; word-break: break-all;">
+            <strong>URL:</strong> <span id="envSupabaseUrlText">กำลังโหลด...</span>
+          </div>
+        </div>
+
+        <!-- Quick SQL Schema Code Block -->
+        <div class="sql-box-wrapper" style="margin-bottom: 20px;">
+          <div class="sql-box-header">
+            <span><i class="fa-solid fa-terminal"></i> คำสั่ง SQL สร้างตาราง & Storage Bucket (นำไปรันใน Supabase > SQL Editor):</span>
+            <button type="button" id="btnCopySql" class="btn-copy-code"><i class="fa-solid fa-copy"></i> ก็อปปี้ SQL ทั้งหมด</button>
+          </div>
+          <pre class="sql-code-block" id="sqlCodeBlock"><code>-- 1. สร้างตารางเก็บข้อมูลคลิป
+CREATE TABLE IF NOT EXISTS public.recaps (
+    id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    titles JSONB DEFAULT '[]'::jsonb,
+    description TEXT,
+    video_url TEXT,
+    thumbnail_url TEXT,
+    folder_name TEXT,
+    series TEXT,
+    duration TEXT,
+    tags TEXT[] DEFAULT '{}',
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE public.recaps ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow public read" ON public.recaps FOR SELECT USING (true);
+CREATE POLICY "Allow public insert" ON public.recaps FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public update" ON public.recaps FOR UPDATE USING (true);
+
+-- 2. สร้าง Storage Bucket สำหรับเก็บไฟล์วิดีโอ .mp4 และปก .jpg
+INSERT INTO storage.buckets (id, name, public) VALUES ('recaps', 'recaps', true)
+ON CONFLICT (id) DO UPDATE SET public = true;
+
+CREATE POLICY "Public Read Recaps" ON storage.objects FOR SELECT USING (bucket_id = 'recaps');
+CREATE POLICY "Public Insert Recaps" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'recaps');</code></pre>
+        </div>
+
+        <div class="form-actions" style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button type="button" id="btnSyncFromModal" class="btn-save-conn" style="padding: 11px 22px; cursor: pointer;">
+            <i class="fa-solid fa-cloud-arrow-up"></i> ซิงค์ไฟล์ & ข้อมูลขึ้น Supabase ทันที
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- YouTube Scheduling Modal -->
+  <div class="vault-modal" id="youtubeScheduleModal" aria-hidden="true">
+    <div class="modal-backdrop" id="ytModalBackdrop"></div>
+    <div class="modal-dialog" style="max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px 24px;">
+      <button type="button" class="btn-modal-close" id="btnCloseYtModal" title="ปิดหน้าต่าง">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="yt-modal-content">
+        <!-- Header -->
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
+          <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(255, 0, 0, 0.15); border: 1px solid rgba(255, 0, 0, 0.4); display: flex; align-items: center; justify-content: center; font-size: 24px; color: #ff0000;">
+            <i class="fa-brands fa-youtube"></i>
+          </div>
+          <div>
+            <h2 style="font-size: 19px; font-weight: 700; color: #fff;">ตั้งเวลาโพสต์คลิปสั้นลง YouTube</h2>
+            <p style="font-size: 12.5px; color: var(--text-secondary);">ระบบจะอัปโหลดวิดีโอ กรอกข้อมูลทั้งหมด และตั้งเวลาเผยแพร่อัตโนมัติ</p>
+          </div>
+        </div>
+
+        <!-- Connection Status & Client Secret Notice -->
+        <div id="ytAuthSection" style="background: rgba(14, 22, 38, 0.85); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; margin-bottom: 18px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 13px; font-weight: 600; color: #fff;">
+              <i class="fa-solid fa-shield-halved"></i> การเชื่อมต่อ YouTube API
+            </span>
+            <span id="ytStatusBadge" style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: rgba(255, 210, 63, 0.15); color: var(--neon-gold); border: 1px solid rgba(255, 210, 63, 0.3);">
+              กำลังตรวจสอบ...
+            </span>
+          </div>
+
+          <!-- Secret Upload Box (Shown when client_secret.json missing) -->
+          <div id="ytSecretUploadBox" style="display: none; margin-top: 10px; background: rgba(0, 0, 0, 0.3); border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+              ยังไม่พบไฟล์ <code>client_secret.json</code> จาก Google Cloud Console
+            </p>
+            <label for="ytSecretFileInput" style="display: inline-block; padding: 6px 14px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: #fff; font-size: 12px; cursor: pointer;">
+              <i class="fa-solid fa-upload"></i> เลือกไฟล์ client_secret.json
+            </label>
+            <input type="file" id="ytSecretFileInput" accept=".json" style="display: none;">
+          </div>
+
+          <!-- Login Button (Shown when secret is present but not authenticated) -->
+          <div id="ytLoginActionBox" style="display: none; margin-top: 10px;">
+            <button type="button" id="btnYtLogin" style="width: 100%; padding: 8px; border-radius: var(--radius-sm); background: #ff0000; border: none; color: #fff; font-weight: 600; font-size: 12.5px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+              <i class="fa-brands fa-google"></i> ล็อกอินเข้าสู่ระบบช่อง YouTube (คลิกครั้งเดียว)
+            </button>
+          </div>
+        </div>
+
+        <!-- Schedule Date & Time Selector -->
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--neon-green);">
+            <i class="fa-regular fa-clock"></i> เลือกวันและเวลาที่ต้องการให้เผยแพร่ (Schedule Post):
+          </label>
+          <input type="datetime-local" id="ytScheduleInput" class="search-input" style="width: 100%; padding: 10px 14px; font-size: 13.5px; border-radius: var(--radius-sm);">
+
+          <!-- Quick Presets -->
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px;">
+            <button type="button" class="btn-yt-preset" data-preset="plus-1h" style="padding: 4px 10px; font-size: 11px; border-radius: var(--radius-full); background: rgba(0, 255, 136, 0.12); border: 1px solid var(--neon-green); color: var(--neon-green); font-weight: 600; cursor: pointer;">
+              ⚡ +1 ชม. (ค่าเริ่มต้น)
+            </button>
+            <button type="button" class="btn-yt-preset" data-preset="plus-2h" style="padding: 4px 9px; font-size: 11px; border-radius: var(--radius-full); background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); color: var(--text-secondary); cursor: pointer;">
+              +2 ชม.
+            </button>
+            <button type="button" class="btn-yt-preset" data-preset="plus-3h" style="padding: 4px 9px; font-size: 11px; border-radius: var(--radius-full); background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); color: var(--text-secondary); cursor: pointer;">
+              +3 ชม.
+            </button>
+            <button type="button" class="btn-yt-preset" data-preset="today-20" style="padding: 4px 9px; font-size: 11px; border-radius: var(--radius-full); background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); color: var(--text-secondary); cursor: pointer;">
+              วันนี้ 20:00 น.
+            </button>
+            <button type="button" class="btn-yt-preset" data-preset="tomorrow-18" style="padding: 4px 9px; font-size: 11px; border-radius: var(--radius-full); background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); color: var(--text-secondary); cursor: pointer;">
+              พรุ่งนี้ 18:00 น.
+            </button>
+            <button type="button" class="btn-yt-preset" data-hours="0" style="padding: 4px 9px; font-size: 11px; border-radius: var(--radius-full); background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); color: var(--text-secondary); cursor: pointer;">
+              เผยแพร่ทันที (Public)
+            </button>
+          </div>
+        </div>
+
+        <!-- Video Title Auto-Filled -->
+        <div style="margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="font-size: 13px; font-weight: 600; color: #fff;">
+              <i class="fa-solid fa-heading"></i> ชื่อคลิปบน YouTube:
+            </label>
+            <div id="ytTitleStyleTabs" style="display: flex; gap: 4px;"></div>
+          </div>
+          <input type="text" id="ytTitleInput" class="search-input" style="width: 100%; padding: 10px 14px; font-size: 13px; border-radius: var(--radius-sm);" placeholder="ใส่ชื่อคลิป...">
+        </div>
+
+        <!-- Video Description Auto-Filled -->
+        <div style="margin-bottom: 18px;">
+          <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #fff;">
+            <i class="fa-solid fa-align-left"></i> คำอธิบาย & แฮชแท็ก:
+          </label>
+          <textarea id="ytDescInput" class="search-input" rows="4" style="width: 100%; padding: 10px 14px; font-size: 12.5px; border-radius: var(--radius-sm); resize: vertical;" placeholder="ใส่คำอธิบาย..."></textarea>
+        </div>
+
+        <!-- Status Message / Loading -->
+        <div id="ytUploadResultMsg" style="display: none; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 12.5px; margin-bottom: 16px;"></div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button type="button" id="btnCancelYtModal" style="padding: 10px 18px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-subtle); color: #fff; font-family: var(--font-th); cursor: pointer; font-size: 13px;">
+            ยกเลิก
+          </button>
+          <button type="button" id="btnSubmitYtSchedule" style="padding: 10px 22px; border-radius: var(--radius-sm); background: linear-gradient(135deg, #ff0000, #c4302b); border: none; color: #fff; font-family: var(--font-th); font-weight: 700; cursor: pointer; font-size: 13px; box-shadow: 0 4px 16px rgba(255, 0, 0, 0.4); display: flex; align-items: center; gap: 8px;">
+            <i class="fa-brands fa-youtube"></i> <span>ยืนยันตั้งเวลาโพสต์คลิป</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="vault-toast" id="vaultToast">
+    <i class="fa-solid fa-circle-check toast-icon"></i>
+    <span class="toast-message" id="toastMessage">คัดลอกข้อความสำเร็จ!</span>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
