@@ -96,15 +96,15 @@ body {
   background: rgba(255, 255, 255, 0.45);
 }
 
-/* Vibrant Floating Ambient Blobs (3D Liquid Bubbles) */
+/* Vibrant Floating Ambient Blobs (Optimized Static Atmosphere) */
 .ambient-glow {
   position: fixed;
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
-  filter: blur(95px);
-  opacity: 0.5;
-  animation: floatBlobs 18s ease-in-out infinite alternate;
+  filter: blur(80px);
+  opacity: 0.45;
+  transform: translateZ(0);
 }
 
 .glow-emerald {
@@ -121,8 +121,6 @@ body {
   background: radial-gradient(circle, #06b6d4 30%, #3b82f6 80%);
   bottom: 5%;
   right: -50px;
-  animation-duration: 22s;
-  animation-delay: -5s;
 }
 
 .glow-purple {
@@ -131,14 +129,6 @@ body {
   background: radial-gradient(circle, #a855f7 20%, #f43f5e 80%);
   top: 38%;
   left: 45%;
-  animation-duration: 26s;
-  animation-delay: -10s;
-}
-
-@keyframes floatBlobs {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(40px, -30px) scale(1.08); }
-  100% { transform: translate(-30px, 40px) scale(0.95); }
 }
 
 /* ==========================================================================
@@ -149,11 +139,12 @@ body {
   top: 0;
   z-index: 100;
   background: var(--bg-glass-nav);
-  backdrop-filter: blur(28px) saturate(200%);
-  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border-glass);
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
   padding: 14px 28px;
+  transform: translateZ(0);
 }
 
 .nav-wrapper {
@@ -279,8 +270,8 @@ body {
 
 .vault-dashboard {
   background: var(--bg-glass-dash);
-  backdrop-filter: blur(36px) saturate(200%);
-  -webkit-backdrop-filter: blur(36px) saturate(200%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 30px 36px;
@@ -288,6 +279,7 @@ body {
   box-shadow: var(--glass-shadow), var(--rim-specular-beveled);
   position: relative;
   overflow: hidden;
+  transform: translateZ(0);
 }
 
 /* Beveled Glass Reflection Sheen on Top Edge */
@@ -364,8 +356,8 @@ body {
 
 .stat-card {
   background: var(--bg-glass-card);
-  backdrop-filter: blur(24px) saturate(190%);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
   padding: 18px 24px;
@@ -374,7 +366,8 @@ body {
   gap: 16px;
   min-width: 175px;
   box-shadow: var(--glass-shadow), var(--rim-specular);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  transform: translateZ(0);
 }
 
 .stat-card:hover {
@@ -606,17 +599,19 @@ body {
 /* Real Acrylic Glass Card (Border & Frame around Media) */
 .vault-card {
   background: var(--bg-glass-card);
-  backdrop-filter: blur(28px) saturate(200%);
-  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
   padding: 8px; /* Frosted acrylic bezel padding */
   overflow: hidden;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), var(--rim-specular);
   display: flex;
   flex-direction: column;
   position: relative;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .vault-card:hover {
@@ -652,15 +647,14 @@ body {
 .media-hover-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(7, 8, 20, 0.15) 0%, rgba(7, 8, 20, 0.85) 100%);
-  backdrop-filter: blur(4px);
+  background: linear-gradient(180deg, rgba(7, 8, 20, 0.2) 0%, rgba(7, 8, 20, 0.88) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.2s ease;
 }
 
 .vault-card:hover .media-hover-overlay {
