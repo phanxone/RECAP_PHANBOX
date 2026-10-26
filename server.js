@@ -81,10 +81,55 @@ function getSupabaseConfig() {
   return {
     configured: Boolean(url && key),
     supabase_url: url,
+    supabase_key: key,
     supabase_bucket: bucket,
     has_key: Boolean(key)
   };
 }
+
+function getSupabaseRecaps() {
+  loadEnv();
+  const sUrl = (process.env.SUPABASE_URL || '').trim().replace(/\/+$/, '');
+  const sKey = (process.env.SUPABASE_KEY || '').trim();
+  if (!sUrl || !sKey) return Promise.resolve([]);
+
+  return new Promise((resolve) => {
+    try {
+      const dbUrl = `${sUrl}/rest/v1/recaps?select=*&order=created_at.desc`;
+      const https = sUrl.startsWith('https') ? require('https') : require('http');
+      const sReq = https.get(dbUrl, {
+        headers: {
+          'apikey': sKey,
+          'Authorization': `Bearer ${sKey}`
+        },
+        timeout: 6000
+      }, (sRes) => {
+        let data = '';
+        sRes.on('data', chunk => data += chunk);
+        sRes.on('end', () => {
+          if (sRes.statusCode >= 200 && sRes.statusCode < 300) {
+            try {
+              const parsed = JSON.parse(data);
+              resolve(Array.isArray(parsed) ? parsed : []);
+            } catch (e) {
+              resolve([]);
+            }
+          } else {
+            resolve([]);
+          }
+        });
+      });
+      sReq.on('error', () => resolve([]));
+      sReq.on('timeout', () => {
+        sReq.destroy();
+        resolve([]);
+      });
+    } catch (e) {
+      resolve([]);
+    }
+  });
+}
+
 
 function handleMedia(req, res, filePath) {
   if (!fs.existsSync(filePath)) {
@@ -121,7 +166,7 @@ function handleMedia(req, res, filePath) {
   }
 }
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -148,9 +193,30 @@ const server = http.createServer((req, res) => {
 
   // 2. API: /api/recaps (GET)
   if (pathname === '/api/recaps' && req.method === 'GET') {
-    const recaps = getLocalRecaps();
+    const localRecaps = getLocalRecaps();
+    let cloudRecaps = [];
+    if (process.env.SUPABASE_URL && process.env.SUPABASE_KEY) {
+      cloudRecaps = await getSupabaseRecaps();
+    }
+
+    const map = new Map();
+    for (const item of cloudRecaps) {
+      map.set(item.id, { ...item, source: 'cloud' });
+    }
+    for (const item of localRecaps) {
+      if (map.has(item.id)) {
+        map.set(item.id, {
+          ...map.get(item.id),
+          ...item,
+          source: 'synced'
+        });
+      } else {
+        map.set(item.id, { ...item, source: 'local' });
+      }
+    }
+    const combined = Array.from(map.values());
     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-    return res.end(JSON.stringify({ success: true, count: recaps.length, data: recaps }));
+    return res.end(JSON.stringify({ success: true, count: combined.length, data: combined }));
   }
 
   // 2.1 API: DELETE /api/recaps/:id

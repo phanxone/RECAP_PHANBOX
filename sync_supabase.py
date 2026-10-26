@@ -9,9 +9,9 @@ if hasattr(sys.stdout, 'reconfigure'):
         sys.stdout.reconfigure(encoding='utf-8')
     except Exception:
         pass
-
-ENV_FILE = "C:/71006/phanbox/.env"
-FINAL_DIR = "C:/71006/phanbox/final"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ENV_FILE = os.path.join(BASE_DIR, ".env")
+FINAL_DIR = os.path.join(BASE_DIR, "final")
 
 def load_env():
     env = {}

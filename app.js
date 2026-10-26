@@ -158,7 +158,11 @@ document.addEventListener('DOMContentLoaded', () => {
             envStatusBadge.textContent = 'CONFIGURED IN .ENV';
             envStatusBadge.style.background = 'rgba(0, 255, 136, 0.2)';
             envStatusBadge.style.color = '#00ff88';
-            updateStatusBadge(true);
+            if (serverConfig.supabase_url && serverConfig.supabase_key) {
+              initSupabase(serverConfig.supabase_url, serverConfig.supabase_key);
+            } else {
+              updateStatusBadge(true);
+            }
           } else {
             envStatusBadge.textContent = 'NOT CONFIGURED';
             envStatusBadge.style.background = 'rgba(255, 210, 63, 0.2)';
