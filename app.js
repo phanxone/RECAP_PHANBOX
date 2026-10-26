@@ -113,6 +113,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // ================= DIRECT FILE DOWNLOAD VIA BLOB =================
+  async function triggerFileDownload(url, filename) {
+    if (!url) {
+      showToast('ไม่พบที่อยู่ไฟล์สำหรับดาวน์โหลด', 'fa-triangle-exclamation');
+      return;
+    }
+    showToast('กำลังดาวน์โหลดไฟล์...', 'fa-circle-notch fa-spin', 2500);
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename || 'download';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
+      showToast('ดาวน์โหลดเสร็จสมบูรณ์!', 'fa-circle-check');
+    } catch (err) {
+      console.warn('Direct blob download failed, falling back to direct link:', err);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename || 'download';
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  }
+
   // ================= SUPABASE CLIENT INITIALIZATION =================
   function initSupabase(url, key) {
     if (!url || !key || typeof window.supabase === 'undefined') {
@@ -528,8 +560,21 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Download Links
+    const coverFilename = item.thumbnail_file || `${(item.title || 'cover').replace(/[/\\?%*:|"<>]/g, '_')}.jpg`;
+    const videoFilename = item.video_file || `${(item.title || 'video').replace(/[/\\?%*:|"<>]/g, '_')}.mp4`;
+
     modalDownloadVideo.href = videoUrl;
     modalDownloadCover.href = thumbUrl;
+
+    modalDownloadCover.onclick = (e) => {
+      e.preventDefault();
+      triggerFileDownload(thumbUrl, coverFilename);
+    };
+
+    modalDownloadVideo.onclick = (e) => {
+      e.preventDefault();
+      triggerFileDownload(videoUrl, videoFilename);
+    };
 
     // Delete Button inside Modal
     const btnModalDeleteClip = document.getElementById('btnModalDeleteClip');
