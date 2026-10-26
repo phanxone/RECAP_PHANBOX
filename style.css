@@ -1,36 +1,57 @@
 /* ==========================================================================
-   RECAP VAULT - Cyber Storage & Warehouse Design System
+   RECAP VAULT - Vibrant Frosted Acrylic Glassmorphism Design System
+   Authentic Liquid Glass, Beveled Specular Highlights & Vivid Glowing Blobs
    ========================================================================== */
 
 :root {
-  --bg-dark: #070b14;
-  --bg-surface: #0e1626;
-  --bg-card: rgba(16, 26, 46, 0.85);
-  --bg-card-hover: rgba(22, 36, 64, 0.95);
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-glow: rgba(0, 255, 136, 0.35);
-  --border-cyan: rgba(0, 212, 255, 0.4);
-  
-  --neon-green: #00ff88;
-  --neon-cyan: #00d4ff;
-  --neon-purple: #b537f2;
-  --neon-gold: #ffd23f;
-  --neon-red: #ff4757;
+  /* Dark Void Base with High-Contrast Saturation */
+  --bg-dark: #070814;
+  --bg-surface: #0c0e1e;
 
-  --text-main: #f0f4fc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  /* Frosted Milky Acrylic Glass Layers */
+  --bg-glass-nav: rgba(12, 14, 28, 0.6);
+  --bg-glass-dash: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%);
+  --bg-glass-card: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.035) 100%);
+  --bg-glass-card-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.06) 100%);
+  --bg-glass-pill: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+  --bg-glass-modal: rgba(12, 14, 28, 0.82);
+  --bg-glass-input: rgba(255, 255, 255, 0.06);
+
+  /* Crisp White Specular Glass Borders (Sharp Edge Reflection) */
+  --border-glass: rgba(255, 255, 255, 0.28);
+  --border-glass-bright: rgba(255, 255, 255, 0.55);
+  --border-glass-subtle: rgba(255, 255, 255, 0.14);
+
+  /* Vivid Liquid Palette for Blobs & Glows */
+  --vivid-pink: #ff2a8d;
+  --vivid-rose: #f43f5e;
+  --vivid-purple: #8b5cf6;
+  --vivid-violet: #a855f7;
+  --vivid-cyan: #06b6d4;
+  --vivid-blue: #3b82f6;
+  --vivid-emerald: #10b981;
+  --vivid-gold: #fbbf24;
+
+  /* Typography */
+  --text-main: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
 
   --font-en: 'Plus Jakarta Sans', sans-serif;
   --font-th: 'Prompt', sans-serif;
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  /* Rounded Glass Radii */
+  --radius-xs: 8px;
+  --radius-sm: 14px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
   --radius-full: 9999px;
 
-  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6), 0 0 20px -5px rgba(0, 255, 136, 0.08);
-  --shadow-hover: 0 20px 40px -12px rgba(0, 0, 0, 0.8), 0 0 30px -2px rgba(0, 255, 136, 0.25);
+  /* Specular Rim Lights (Realistic Beveled Acrylic Reflections) */
+  --rim-specular: inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.65);
+  --rim-specular-soft: inset 0 1px 1px 0 rgba(255, 255, 255, 0.45);
+  --rim-specular-beveled: inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 2px 0 rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 18px 40px -10px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 255, 255, 0.05);
 }
 
 *, *::before, *::after {
@@ -41,6 +62,14 @@
 
 body {
   background-color: var(--bg-dark);
+  /* Multi-color 3D Liquid Atmosphere */
+  background-image: 
+    radial-gradient(circle 500px at 15% 10%, rgba(255, 42, 141, 0.28), transparent 70%),
+    radial-gradient(circle 600px at 85% 20%, rgba(139, 92, 246, 0.32), transparent 70%),
+    radial-gradient(circle 550px at 50% 60%, rgba(6, 182, 212, 0.22), transparent 70%),
+    radial-gradient(circle 650px at 80% 90%, rgba(255, 42, 141, 0.25), transparent 70%),
+    radial-gradient(circle 500px at 10% 85%, rgba(139, 92, 246, 0.28), transparent 70%);
+  background-attachment: fixed;
   color: var(--text-main);
   font-family: var(--font-th);
   min-height: 100vh;
@@ -49,56 +78,86 @@ body {
   position: relative;
 }
 
-/* Ambient Backdrops */
+/* Custom Glass Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* Vibrant Floating Ambient Blobs (3D Liquid Bubbles) */
 .ambient-glow {
   position: fixed;
   border-radius: 50%;
-  filter: blur(120px);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.18;
+  filter: blur(95px);
+  opacity: 0.5;
+  animation: floatBlobs 18s ease-in-out infinite alternate;
 }
 
 .glow-emerald {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, var(--neon-green), transparent);
-  top: -100px;
-  left: 10%;
+  background: radial-gradient(circle, #ff2a8d 20%, #8b5cf6 80%);
+  top: -80px;
+  left: 5%;
 }
 
 .glow-cyan {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, var(--neon-cyan), transparent);
-  bottom: 10%;
-  right: 5%;
+  background: radial-gradient(circle, #06b6d4 30%, #3b82f6 80%);
+  bottom: 5%;
+  right: -50px;
+  animation-duration: 22s;
+  animation-delay: -5s;
 }
 
 .glow-purple {
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, var(--neon-purple), transparent);
-  top: 40%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, #a855f7 20%, #f43f5e 80%);
+  top: 38%;
   left: 45%;
+  animation-duration: 26s;
+  animation-delay: -10s;
+}
+
+@keyframes floatBlobs {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.08); }
+  100% { transform: translate(-30px, 40px) scale(0.95); }
 }
 
 /* ==========================================================================
-   Navbar
+   Navbar (Frosted Acrylic Glass Header)
    ========================================================================== */
 .vault-navbar {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(7, 11, 20, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-subtle);
-  padding: 14px 24px;
+  background: var(--bg-glass-nav);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border-bottom: 1px solid var(--border-glass);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  padding: 14px 28px;
 }
 
 .nav-wrapper {
-  max-width: 1760px;
+  max-width: 1280px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -112,18 +171,27 @@ body {
   gap: 14px;
 }
 
+/* Glass Capsule Brand Icon with Beveled Highlight */
 .brand-icon-box {
   width: 46px;
   height: 46px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 212, 255, 0.2));
-  border: 1px solid var(--border-glow);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass-bright);
+  box-shadow: var(--rim-specular-beveled), 0 8px 24px rgba(255, 42, 141, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--neon-green);
-  font-size: 22px;
-  box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+  color: #fff;
+  font-size: 21px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.brand-icon-box:hover {
+  transform: scale(1.08) rotate(4deg);
+  border-color: #fff;
+  box-shadow: var(--rim-specular-beveled), 0 0 30px rgba(255, 42, 141, 0.6);
 }
 
 .brand-name {
@@ -137,23 +205,26 @@ body {
 }
 
 .neon-text {
-  background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+  background: linear-gradient(135deg, #ffffff 10%, #f472b6 60%, #c084fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 16px rgba(244, 114, 182, 0.4));
 }
 
 .vault-version {
   font-size: 11px;
-  background: rgba(0, 212, 255, 0.15);
-  color: var(--neon-cyan);
-  border: 1px solid rgba(0, 212, 255, 0.3);
-  padding: 2px 7px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid var(--border-glass);
+  padding: 2px 10px;
   border-radius: var(--radius-full);
+  box-shadow: var(--rim-specular-soft);
+  font-weight: 700;
 }
 
 .brand-sub {
   font-size: 13px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .header-actions {
@@ -162,96 +233,79 @@ body {
   gap: 12px;
 }
 
+/* Glass Capsule Status Pill */
 .status-indicator {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
+  gap: 9px;
+  padding: 7px 20px;
   border-radius: var(--radius-full);
-  background: rgba(14, 22, 38, 0.9);
-  border: 1px solid var(--border-subtle);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--rim-specular), 0 8px 20px rgba(0, 0, 0, 0.35);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   font-family: var(--font-en);
+  letter-spacing: 0.3px;
+  color: #fff;
 }
 
 .status-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: var(--neon-gold);
-  box-shadow: 0 0 8px var(--neon-gold);
+  background-color: var(--vivid-gold);
+  box-shadow: 0 0 12px var(--vivid-gold);
   transition: all 0.3s ease;
 }
 
 .status-indicator.connected .status-dot {
-  background-color: var(--neon-green);
-  box-shadow: 0 0 10px var(--neon-green);
-}
-
-.btn-vault-action, .btn-vault-settings {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: var(--radius-md);
-  font-family: var(--font-th);
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  border: none;
-}
-
-.btn-vault-action {
-  background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 212, 255, 0.15));
-  border: 1px solid var(--border-glow);
-  color: var(--neon-green);
-}
-
-.btn-vault-action:hover {
-  background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 212, 255, 0.3));
-  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
-  transform: translateY(-2px);
-}
-
-.btn-vault-settings {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-main);
-}
-
-.btn-vault-settings:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--vivid-emerald);
+  box-shadow: 0 0 14px var(--vivid-emerald);
 }
 
 /* ==========================================================================
-   Main Layout & Dashboard
+   Dashboard Banner (Large Acrylic Glass Card like Image 1)
    ========================================================================== */
 .vault-main-container {
-  max-width: 1760px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 20px 24px 60px;
+  padding: 28px 24px 70px;
   position: relative;
   z-index: 1;
 }
 
 .vault-dashboard {
-  background: linear-gradient(135deg, rgba(14, 22, 38, 0.7), rgba(10, 16, 28, 0.9));
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 20px 24px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-card);
-  backdrop-filter: blur(12px);
+  background: var(--bg-glass-dash);
+  backdrop-filter: blur(36px) saturate(200%);
+  -webkit-backdrop-filter: blur(36px) saturate(200%);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 30px 36px;
+  margin-bottom: 28px;
+  box-shadow: var(--glass-shadow), var(--rim-specular-beveled);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Beveled Glass Reflection Sheen on Top Edge */
+.vault-dashboard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
 }
 
 .dashboard-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  gap: 32px;
   flex-wrap: wrap;
 }
 
@@ -260,40 +314,48 @@ body {
   min-width: 320px;
 }
 
+/* Acrylic Pill Tag */
 .dash-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 5px 12px;
+  padding: 6px 18px;
   border-radius: var(--radius-full);
-  background: rgba(0, 255, 136, 0.1);
-  border: 1px solid var(--border-glow);
-  color: var(--neon-green);
-  font-size: 12px;
-  font-weight: 700;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass-bright);
+  box-shadow: var(--rim-specular);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 600;
   font-family: var(--font-en);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .dash-title {
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 800;
-  letter-spacing: -0.5px;
-  margin-bottom: 8px;
+  letter-spacing: -0.6px;
+  margin-bottom: 10px;
+  color: #fff;
 }
 
+/* Vibrant White-Lilac-Pink Headline */
 .gradient-headline {
-  background: linear-gradient(90deg, #ffffff, var(--neon-cyan), var(--neon-green));
+  background: linear-gradient(135deg, #ffffff 10%, #f472b6 65%, #c084fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(244, 114, 182, 0.35));
 }
 
 .dash-subtitle {
   color: var(--text-secondary);
   font-size: 15px;
-  max-width: 650px;
+  max-width: 680px;
+  line-height: 1.7;
 }
 
+/* Glassmorphism Stat Cards (Floating Acrylic Capsules) */
 .stats-grid {
   display: flex;
   gap: 16px;
@@ -301,58 +363,80 @@ body {
 }
 
 .stat-card {
-  background: rgba(18, 29, 52, 0.6);
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-glass-card);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 16px 20px;
+  padding: 18px 24px;
   display: flex;
   align-items: center;
   gap: 16px;
-  min-width: 170px;
-  transition: all 0.25s ease;
+  min-width: 175px;
+  box-shadow: var(--glass-shadow), var(--rim-specular);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .stat-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-4px);
+  background: var(--bg-glass-card-hover);
+  border-color: var(--border-glass-bright);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), var(--rim-specular-beveled);
 }
 
 .stat-icon-wrapper {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-md);
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
+  box-shadow: var(--rim-specular-soft);
 }
 
-.stat-green { background: rgba(0, 255, 136, 0.12); color: var(--neon-green); border: 1px solid rgba(0, 255, 136, 0.25); }
-.stat-cyan  { background: rgba(0, 212, 255, 0.12); color: var(--neon-cyan); border: 1px solid rgba(0, 212, 255, 0.25); }
-.stat-gold  { background: rgba(255, 210, 63, 0.12); color: var(--neon-gold); border: 1px solid rgba(255, 210, 63, 0.25); }
+.stat-green { 
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0.08) 100%); 
+  color: #6ee7b7; 
+  border: 1px solid rgba(110, 231, 183, 0.45);
+  box-shadow: var(--rim-specular), 0 0 20px rgba(16, 185, 129, 0.3); 
+}
+.stat-cyan { 
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.3) 0%, rgba(6, 182, 212, 0.08) 100%); 
+  color: #67e8f9; 
+  border: 1px solid rgba(103, 232, 249, 0.45);
+  box-shadow: var(--rim-specular), 0 0 20px rgba(6, 182, 212, 0.3); 
+}
+.stat-gold { 
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.3) 0%, rgba(244, 63, 94, 0.08) 100%); 
+  color: #fda4af; 
+  border: 1px solid rgba(253, 164, 175, 0.45);
+  box-shadow: var(--rim-specular), 0 0 20px rgba(244, 63, 94, 0.3); 
+}
 
 .stat-num {
   display: block;
   font-family: var(--font-en);
-  font-size: 26px;
+  font-size: 27px;
   font-weight: 800;
   line-height: 1.1;
+  color: #fff;
 }
 
 .stat-label {
   font-size: 13px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 /* ==========================================================================
-   Toolbar & Filters
+   Toolbar & Filters (Frosted Glass Interactive Bar)
    ========================================================================== */
 .controls-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
   flex-wrap: wrap;
 }
 
@@ -365,43 +449,56 @@ body {
 
 .search-icon {
   position: absolute;
-  left: 16px;
+  left: 18px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text-muted);
-  font-size: 16px;
+  color: var(--text-secondary);
+  font-size: 15px;
+  pointer-events: none;
+  transition: color 0.25s ease;
 }
 
 .search-input {
   width: 100%;
-  padding: 12px 42px 12px 44px;
-  background: rgba(14, 22, 38, 0.85);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  color: var(--text-main);
+  padding: 12px 42px 12px 48px;
+  background: var(--bg-glass-input);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-full);
+  color: #fff;
   font-family: var(--font-th);
   font-size: 14px;
   outline: none;
-  transition: all 0.25s ease;
+  box-shadow: var(--rim-specular), inset 0 2px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .search-input:focus {
-  border-color: var(--neon-cyan);
-  box-shadow: 0 0 16px rgba(0, 212, 255, 0.2);
-  background: rgba(18, 29, 50, 0.95);
+  border-color: var(--border-glass-bright);
+  box-shadow: var(--rim-specular-beveled), 0 0 25px rgba(255, 42, 141, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.search-input:focus + .search-icon {
+  color: #fff;
 }
 
 .btn-clear-search {
   position: absolute;
-  right: 14px;
+  right: 16px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   cursor: pointer;
   display: none;
   font-size: 14px;
+}
+
+.btn-clear-search:hover {
+  color: #fff;
 }
 
 .filter-pills-row {
@@ -411,142 +508,157 @@ body {
   flex-wrap: wrap;
 }
 
+/* Glassmorphism Capsule Buttons (Inspired by Image 2) */
 .filter-pill {
-  padding: 8px 16px;
+  padding: 9px 22px;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
+  background: var(--bg-glass-pill);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--rim-specular-beveled), 0 8px 20px rgba(0, 0, 0, 0.3);
+  color: #fff;
   font-family: var(--font-th);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
 }
 
 .filter-pill:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--text-main);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%);
+  border-color: var(--border-glass-bright);
+  transform: translateY(-2px);
+  box-shadow: var(--rim-specular-beveled), 0 12px 25px rgba(0, 0, 0, 0.4);
 }
 
+/* Active Acrylic Button (Vivid Gradient Reflection) */
 .filter-pill.active {
-  background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 212, 255, 0.2));
-  border-color: var(--neon-green);
-  color: var(--neon-green);
-  font-weight: 600;
-  box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+  background: linear-gradient(135deg, rgba(255, 42, 141, 0.4) 0%, rgba(139, 92, 246, 0.4) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: var(--rim-specular-beveled), 0 0 28px rgba(255, 42, 141, 0.5);
 }
 
 .sort-selector-box {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-size: 13px;
   color: var(--text-secondary);
 }
 
 .sort-dropdown {
-  background: rgba(14, 22, 38, 0.85);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-main);
-  padding: 8px 14px;
-  border-radius: var(--radius-md);
+  background: var(--bg-glass-pill);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--rim-specular);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
   font-family: var(--font-th);
   font-size: 13px;
   outline: none;
   cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.sort-dropdown:focus {
+  border-color: var(--border-glass-bright);
+  box-shadow: var(--rim-specular-beveled);
 }
 
 /* ==========================================================================
-   Inventory Cards Grid
+   Inventory Cards Grid (Frosted Acrylic Frames)
    ========================================================================== */
 .inventory-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
-@media (max-width: 1560px) {
+@media (max-width: 1080px) {
   .inventory-grid {
-    grid-template-columns: repeat(6, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
   }
 }
 
-@media (max-width: 1320px) {
+@media (max-width: 768px) {
   .inventory-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 14px;
   }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 480px) {
   .inventory-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
     gap: 12px;
   }
 }
 
-@media (max-width: 680px) {
-  .inventory-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-}
-
+/* Real Acrylic Glass Card (Border & Frame around Media) */
 .vault-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-glass-card);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
+  padding: 8px; /* Frosted acrylic bezel padding */
   overflow: hidden;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), var(--rim-specular);
   display: flex;
   flex-direction: column;
   position: relative;
-  backdrop-filter: blur(10px);
 }
 
 .vault-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-glow);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(0, 255, 136, 0.18);
+  transform: translateY(-6px);
+  background: var(--bg-glass-card-hover);
+  border-color: var(--border-glass-bright);
+  box-shadow: 0 28px 55px rgba(0, 0, 0, 0.75), 0 0 30px rgba(255, 255, 255, 0.15), var(--rim-specular-beveled);
 }
 
-/* 9:16 Preview Box */
+/* 9:16 Video Thumbnail Container inside Acrylic Bezel */
 .card-media-wrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 9 / 16;
-  max-height: none;
-  background-color: #04070e;
+  background-color: #040308;
+  border-radius: 14px;
   overflow: hidden;
   cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .card-thumbnail-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .vault-card:hover .card-thumbnail-img {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
 .media-hover-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+  background: linear-gradient(180deg, rgba(7, 8, 20, 0.15) 0%, rgba(7, 8, 20, 0.85) 100%);
+  backdrop-filter: blur(4px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   opacity: 0;
   transition: opacity 0.25s ease;
 }
@@ -555,19 +667,20 @@ body {
   opacity: 1;
 }
 
+/* Glass Orb Play Button */
 .btn-play-pulse {
-  width: 46px;
-  height: 46px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(244, 114, 182, 0.9));
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #000;
-  font-size: 18px;
-  box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
-  transform: scale(0.9);
-  transition: transform 0.2s ease;
+  color: #070814;
+  font-size: 20px;
+  box-shadow: 0 0 35px rgba(255, 255, 255, 0.7), var(--rim-specular-beveled);
+  transform: scale(0.85);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .vault-card:hover .btn-play-pulse {
@@ -579,27 +692,33 @@ body {
   font-weight: 700;
   color: #fff;
   letter-spacing: 0.5px;
-  background: rgba(0,0,0,0.6);
-  padding: 3px 8px;
+  background: rgba(12, 14, 28, 0.8);
+  backdrop-filter: blur(14px);
+  padding: 4px 14px;
   border-radius: var(--radius-full);
+  border: 1px solid var(--border-glass-bright);
+  box-shadow: var(--rim-specular);
 }
 
+/* Translucent Glass Floating Badges */
 .card-floating-badge {
   position: absolute;
-  padding: 3px 7px;
+  padding: 4px 10px;
   border-radius: var(--radius-full);
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   z-index: 2;
+  box-shadow: var(--rim-specular);
 }
 
 .badge-top-left {
   top: 8px;
   left: 8px;
-  background: rgba(14, 22, 38, 0.85);
-  border: 1px solid var(--border-glow);
-  color: var(--neon-green);
+  background: rgba(12, 14, 28, 0.75);
+  border: 1px solid rgba(255, 42, 141, 0.5);
+  color: #ff94c2;
   max-width: 65%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -609,18 +728,18 @@ body {
 .badge-top-right {
   top: 8px;
   right: 8px;
-  background: rgba(0, 0, 0, 0.75);
-  border: 1px solid var(--border-subtle);
+  background: rgba(7, 8, 20, 0.75);
+  border: 1px solid var(--border-glass);
   color: #fff;
 }
 
 /* Card Body */
 .card-content {
-  padding: 10px 12px 12px;
+  padding: 10px 6px 4px;
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 6px;
+  gap: 8px;
 }
 
 .card-meta-row {
@@ -632,8 +751,8 @@ body {
 
 .card-series-tag {
   font-size: 11px;
-  color: var(--neon-cyan);
-  font-weight: 600;
+  color: #c084fc;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   overflow: hidden;
@@ -642,35 +761,35 @@ body {
 }
 
 .card-main-title {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
-  line-height: 1.35;
-  color: #f1f5f9;
+  line-height: 1.4;
+  color: #ffffff;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 35px;
+  min-height: 38px;
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .card-main-title:hover {
-  color: var(--neon-cyan);
+  color: #f472b6;
 }
 
-/* Sleek Action Buttons */
+/* Bottom Action Buttons (Capsule Glass Buttons) */
 .card-bottom-actions {
   display: flex;
   align-items: center;
   gap: 6px;
   margin-top: auto;
-  padding-top: 4px;
+  padding-top: 6px;
 }
 
 .btn-card-action {
-  height: 32px;
-  border-radius: var(--radius-sm);
+  height: 34px;
+  border-radius: var(--radius-full);
   font-family: var(--font-th);
   font-size: 11.5px;
   font-weight: 600;
@@ -679,52 +798,58 @@ body {
   justify-content: center;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.2s ease;
-  border: 1px solid var(--border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--rim-specular);
 }
 
+/* Watch Button - Beveled Frosted Pill */
 .btn-watch-card {
   flex: 1;
-  background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 212, 255, 0.15));
-  border-color: var(--border-glow);
-  color: var(--neon-green);
-  gap: 5px;
-  padding: 0 8px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
+  border-color: var(--border-glass-bright);
+  color: #fff;
+  gap: 6px;
+  padding: 0 12px;
 }
 
 .btn-watch-card:hover {
-  background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 212, 255, 0.3));
-  border-color: var(--neon-green);
-  box-shadow: 0 0 12px rgba(0, 255, 136, 0.25);
+  background: linear-gradient(135deg, rgba(255, 42, 141, 0.45) 0%, rgba(139, 92, 246, 0.45) 100%);
+  border-color: #fff;
+  box-shadow: var(--rim-specular-beveled), 0 0 22px rgba(255, 42, 141, 0.5);
+  transform: translateY(-2px);
 }
 
 .btn-copy-card {
-  width: 32px;
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-secondary);
-}
-
-.btn-copy-card:hover {
-  background: rgba(0, 212, 255, 0.18);
-  border-color: var(--neon-cyan);
-  color: var(--neon-cyan);
-}
-
-.btn-del-card {
-  width: 32px;
-  background: rgba(255, 71, 87, 0.06);
-  border-color: rgba(255, 71, 87, 0.2);
-  color: #ff6b81;
-}
-
-.btn-del-card:hover {
-  background: rgba(255, 71, 87, 0.2);
-  border-color: #ff4757;
+  width: 34px;
+  background: rgba(255, 255, 255, 0.08);
   color: #fff;
 }
 
+.btn-copy-card:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #fff;
+  transform: translateY(-2px);
+  box-shadow: var(--rim-specular-beveled);
+}
+
+.btn-del-card {
+  width: 34px;
+  background: rgba(251, 113, 133, 0.1);
+  border-color: rgba(251, 113, 133, 0.35);
+  color: #fda4af;
+}
+
+.btn-del-card:hover {
+  background: rgba(251, 113, 133, 0.3);
+  border-color: #fff;
+  color: #fff;
+  box-shadow: 0 0 18px rgba(251, 113, 133, 0.5);
+  transform: translateY(-2px);
+}
+
 /* ==========================================================================
-   Modals
+   Modals (Frosted Acrylic Chamber)
    ========================================================================== */
 .vault-modal {
   position: fixed;
@@ -736,7 +861,7 @@ body {
   padding: 20px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .vault-modal.open {
@@ -747,45 +872,58 @@ body {
 .modal-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(4, 7, 14, 0.85);
-  backdrop-filter: blur(16px);
+  background: rgba(6, 7, 16, 0.8);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
 }
 
 .modal-dialog {
   position: relative;
   z-index: 2;
-  background: #0d1527;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--bg-glass-modal);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid var(--border-glass-bright);
   border-radius: var(--radius-lg);
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.9), var(--rim-specular-beveled);
   max-width: 900px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
+  transform: scale(0.96) translateY(10px);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vault-modal.open .modal-dialog {
+  transform: scale(1) translateY(0);
 }
 
 .btn-modal-close {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 18px;
+  right: 18px;
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--rim-specular);
   color: #fff;
-  font-size: 16px;
+  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .btn-modal-close:hover {
-  background: var(--neon-red);
-  border-color: var(--neon-red);
+  background: #f43f5e;
+  border-color: #fff;
+  transform: rotate(90deg);
+  box-shadow: 0 0 20px rgba(244, 63, 94, 0.6);
 }
 
 /* Video Modal Layout */
@@ -796,11 +934,11 @@ body {
 }
 
 .video-player-frame {
-  background: #000;
+  background: #030409;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-right: 1px solid var(--border-subtle);
+  border-right: 1px solid var(--border-glass);
 }
 
 .video-player-frame video {
@@ -810,7 +948,7 @@ body {
 }
 
 .video-info-sidebar {
-  padding: 28px 24px;
+  padding: 30px 28px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -819,27 +957,30 @@ body {
 
 .modal-tag-badge {
   display: inline-block;
-  padding: 4px 10px;
+  padding: 5px 16px;
   border-radius: var(--radius-full);
-  background: rgba(0, 255, 136, 0.12);
-  border: 1px solid var(--border-glow);
-  color: var(--neon-green);
-  font-size: 11px;
+  background: linear-gradient(135deg, rgba(255, 42, 141, 0.3) 0%, rgba(139, 92, 246, 0.3) 100%);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass-bright);
+  box-shadow: var(--rim-specular);
+  color: #fff;
+  font-size: 11.5px;
   font-weight: 700;
   align-self: flex-start;
 }
 
 .modal-title {
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 700;
   line-height: 1.35;
+  color: #fff;
 }
 
 .modal-meta-row {
   display: flex;
   gap: 16px;
   font-size: 13px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .zone-label {
@@ -861,18 +1002,32 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  background: rgba(16, 26, 46, 0.7);
-  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--rim-specular);
+  padding: 12px 16px;
   border-radius: var(--radius-sm);
-  border-left: 3px solid var(--neon-green);
+  border-left: 3.5px solid #f472b6;
   font-size: 13px;
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.modal-title-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--border-glass-bright);
 }
 
 .modal-desc-text {
-  background: rgba(14, 22, 38, 0.7);
-  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4), var(--rim-specular);
   border-radius: var(--radius-md);
-  padding: 12px;
+  padding: 14px;
   font-size: 13px;
   max-height: 160px;
   overflow-y: auto;
@@ -883,246 +1038,103 @@ body {
 .btn-copy-full-desc {
   width: 100%;
   margin-top: 8px;
-  padding: 9px;
-  border-radius: var(--radius-md);
+  padding: 11px;
+  border-radius: var(--radius-full);
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--border-subtle);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--rim-specular);
   color: #fff;
   font-family: var(--font-th);
   font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .btn-copy-full-desc:hover {
-  background: var(--neon-green);
-  color: #000;
-  font-weight: 600;
+  background: linear-gradient(135deg, rgba(255, 42, 141, 0.5) 0%, rgba(139, 92, 246, 0.5) 100%);
+  border-color: #fff;
+  box-shadow: var(--rim-specular-beveled), 0 0 22px rgba(255, 42, 141, 0.5);
 }
 
+/* Modal Download Actions (Capsules) */
 .modal-download-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
   margin-top: auto;
-  padding-top: 12px;
+  padding-top: 14px;
 }
 
 .btn-modal-dl {
-  padding: 11px;
-  border-radius: var(--radius-md);
+  padding: 12px;
+  border-radius: var(--radius-full);
   font-family: var(--font-th);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-dl-video {
-  background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
-  color: #000;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(244, 114, 182, 0.9));
+  color: #070814;
+  border: none;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.5), var(--rim-specular-beveled);
 }
 
 .btn-dl-video:hover {
-  box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+  box-shadow: 0 12px 32px rgba(255, 255, 255, 0.75), var(--rim-specular-beveled);
+  transform: translateY(-2px);
 }
 
 .btn-dl-cover {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--border-glass-bright);
+  box-shadow: var(--rim-specular);
   color: #fff;
 }
 
 .btn-dl-cover:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.22);
+  border-color: #fff;
+  transform: translateY(-2px);
+  box-shadow: var(--rim-specular-beveled);
 }
 
-/* ==========================================================================
-   Settings Modal Styles
-   ========================================================================== */
-.settings-content {
-  padding: 32px 30px;
-}
-
-.settings-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.settings-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: var(--radius-md);
-  background: rgba(0, 212, 255, 0.15);
-  border: 1px solid var(--border-cyan);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  color: var(--neon-cyan);
-}
-
-.settings-title {
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.settings-sub {
-  font-size: 13px;
-  color: var(--text-muted);
-}
-
-.settings-form {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.form-group label {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.form-group input {
-  padding: 12px 16px;
-  border-radius: var(--radius-md);
-  background: rgba(10, 16, 28, 0.85);
-  border: 1px solid var(--border-subtle);
-  color: #fff;
-  font-family: var(--font-en);
-  font-size: 14px;
-  outline: none;
-}
-
-.form-group input:focus {
-  border-color: var(--neon-cyan);
-  box-shadow: 0 0 12px rgba(0, 212, 255, 0.2);
-}
-
-.form-hint {
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.sql-box-wrapper {
-  background: #060a12;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 14px;
-}
-
-.sql-box-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 12px;
-  color: var(--neon-gold);
-}
-
-.btn-copy-code {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--border-subtle);
-  color: #fff;
-  padding: 4px 10px;
-  border-radius: var(--radius-sm);
-  font-size: 11px;
-  cursor: pointer;
-}
-
-.btn-copy-code:hover {
-  background: var(--neon-gold);
-  color: #000;
-}
-
-.sql-code-block {
-  font-family: monospace;
-  font-size: 11px;
-  color: #94a3b8;
-  overflow-x: auto;
-  max-height: 130px;
-  line-height: 1.4;
-}
-
-.form-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 10px;
-}
-
-.btn-test-conn, .btn-save-conn {
-  flex: 1;
-  padding: 12px;
-  border-radius: var(--radius-md);
-  font-family: var(--font-th);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: none;
-  transition: all 0.2s ease;
-}
-
-.btn-test-conn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--border-subtle);
-  color: #fff;
-}
-
-.btn-test-conn:hover {
-  background: rgba(255, 255, 255, 0.16);
-}
-
-.btn-save-conn {
-  background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
-  color: #000;
-}
-
-.btn-save-conn:hover {
-  box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
-}
-
-/* ==========================================================================
-   Toast Notification
-   ========================================================================== */
+/* Toast Notification (Acrylic Glass Pill) */
 .vault-toast {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  background: rgba(14, 24, 44, 0.95);
-  border: 1px solid var(--neon-green);
+  background: rgba(16, 18, 36, 0.88);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid var(--border-glass-bright);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 30px rgba(255, 42, 141, 0.4), var(--rim-specular-beveled);
   color: #fff;
-  padding: 12px 20px;
+  padding: 13px 26px;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
-  gap: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 136, 0.3);
+  gap: 12px;
   transform: translateY(100px);
   opacity: 0;
   pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 300;
   font-size: 14px;
+  font-weight: 600;
 }
 
 .vault-toast.show {
@@ -1131,8 +1143,9 @@ body {
 }
 
 .toast-icon {
-  color: var(--neon-green);
+  color: #ff2a8d;
   font-size: 18px;
+  filter: drop-shadow(0 0 10px #ff2a8d);
 }
 
 /* Loading & Empty States */
@@ -1140,17 +1153,23 @@ body {
   grid-column: 1 / -1;
   text-align: center;
   padding: 80px 20px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   font-size: 16px;
+  background: var(--bg-glass-card);
+  backdrop-filter: blur(24px);
+  border: 1px dashed var(--border-glass);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--rim-specular);
 }
 
 .vault-loading-state i {
-  font-size: 36px;
-  color: var(--neon-cyan);
+  font-size: 38px;
+  color: #f472b6;
+  filter: drop-shadow(0 0 16px rgba(244, 114, 182, 0.6));
 }
 
 /* Responsive */
@@ -1160,7 +1179,7 @@ body {
   }
   .video-player-frame {
     border-right: none;
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-glass);
   }
   .video-player-frame video {
     max-height: 420px;
@@ -1178,5 +1197,8 @@ body {
   }
   .inventory-grid {
     grid-template-columns: 1fr;
+  }
+  .vault-dashboard {
+    padding: 20px 22px;
   }
 }
